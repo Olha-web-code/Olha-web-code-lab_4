@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Завдання 4</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+        .container {
+            background-color: #A0D468;
+            padding: 20px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+        }
+        h2 {
+            color: black;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .square {
+            width: 50px;
+            height: 50px;
+            border: 2px dashed red;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>ЗАВДАННЯ 4</h2>
+        <div class="square" id="resizableSquare"></div>
+        <div class="button-group">
+            <button id="decreaseButton">Зменшити</button>
+            <button id="increaseButton">Збільшити</button>
+        </div>
+    </div>
+
+    <script>
+        const resizableSquare = document.getElementById('resizableSquare');
+        const decreaseButton = document.getElementById('decreaseButton');
+        const increaseButton = document.getElementById('increaseButton');
+
+        const step = 15;
+
+        decreaseButton.addEventListener('click', () => {
+            let currentWidth = resizableSquare.offsetWidth;
+            let currentHeight = resizableSquare.offsetHeight;
+
+            resizableSquare.style.width = (currentWidth - step) + 'px';
+            resizableSquare.style.height = (currentHeight - step) + 'px';
+        });
+
+        increaseButton.addEventListener('click', () => {
+            let currentWidth = resizableSquare.offsetWidth;
+            let currentHeight = resizableSquare.offsetHeight;
+
+            resizableSquare.style.width = (currentWidth + step) + 'px';
+            resizableSquare.style.height = (currentHeight + step) + 'px';
+        });
+    </script>
+
+</body>
+</html>

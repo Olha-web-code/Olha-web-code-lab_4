@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+        #controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        #controls input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 80px;
+        }
+        #controls button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #controls button:hover {
+            background-color: #0056b3;
+        }
+        #boxes {
+            display: flex;
+            flex-wrap: wrap; /* Дозволяє елементам переноситися на новий рядок */
+            gap: 10px; /* Відстань між боксами */
+            border: 1px solid #eee;
+            padding: 10px;
+            min-height: 100px; /* Мінімальна висота для демонстрації */
+            width: 80%; /* Щоб бокси не займали всю ширину */
+            justify-content: center; /* Центрування боксів */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="controls">
+        <input type="number" min="1" max="100" step="1" value="1" data-input>
+        <button type="button" data-create>Create</button>
+        <button type="button" data-destroy>Destroy</button>
+    </div>
+
+    <div id="boxes"></div>
+
+    <script>
+        function getRandomHexColor() {
+            return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
+        }
+
+        const controlsDiv = document.getElementById('controls');
+        const numberInput = controlsDiv.querySelector('[data-input]');
+        const createButton = controlsDiv.querySelector('[data-create]');
+        const destroyButton = controlsDiv.querySelector('[data-destroy]');
+        const boxesContainer = document.getElementById('boxes');
+
+        function createBoxes(amount) {
+            // Очищаємо існуючу колекцію перед створенням нової
+            destroyBoxes();
+
+            const fragment = document.createDocumentFragment();
+            let currentSize = 30; // Початковий розмір 30x30px
+
+            for (let i = 0; i < amount; i++) {
+                const box = document.createElement('div');
+                box.style.width = `${currentSize}px`;
+                box.style.height = `${currentSize}px`;
+                box.style.backgroundColor = getRandomHexColor();
+                box.style.marginBottom = '10px'; /* Відступ знизу для візуального розділення */
+                box.style.marginRight = '10px'; /* Відступ справа */
+                fragment.appendChild(box);
+                currentSize += 10; // Збільшуємо розмір на 10px для наступного елемента
+            }
+            boxesContainer.appendChild(fragment);
+        }
+
+        function destroyBoxes() {
+            boxesContainer.innerHTML = '';
+        }
+
+        createButton.addEventListener('click', () => {
+            const amount = parseInt(numberInput.value);
+            if (amount >= 1 && amount <= 100) {
+                createBoxes(amount);
+            } else {
+                alert('Будь ласка, введіть число від 1 до 100.');
+            }
+        });
+
+        destroyButton.addEventListener('click', destroyBoxes);
+    </script>
+
+</body>
+</html>
